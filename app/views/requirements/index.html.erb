@@ -4,7 +4,8 @@
 <%= form_with(model: Requirement.new, local: true ) do |f| %>
 
  <%= f.text_field :title %>
- <%= f.text_area :description %>
+ <%= tinymce %>
+ <%= f.text_area :description, :class => "tinymce", :rows => 20, :cols => 60 %>
  <%= f.submit :Publicar %>
 
 <% end %>
@@ -12,7 +13,7 @@
 <% @requirements.each do |requirement| %>
  <div class="col-md-4">
   <h3><%= requirement.title %></h3>
-  <p><%= requirement.description %></p>
+  <p><%= requirement.description.html_safe %></p>
   <br>
  </div>
 <% end %>
