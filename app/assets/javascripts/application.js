@@ -15,6 +15,7 @@
 //= require activestorage
 //= require_tree .
 
+// Función para mantener el título del index
 function Codepen(posx, posy)
 {
   
