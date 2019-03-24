@@ -1,16 +1,25 @@
+<div id="container">
+  <div id="text-container">
+    <div id="text">
+      <span id="text-span">Rankmi</span>
+    </div>
+  </div>
+</div>
+
+
 <div class="container-fluid gedf-wrapper">
         <div class="row">
             <div class="col-md-3">
             </div>
             <div class="col-md-6 gedf-main">
                 <!--- \\\\\\\Post-->
-                <%= form_with(model: Requirement.new, local: true ) do |f| %>
+                <%= form_with(model: @requirement, local: true ) do |f| %>
                 <%= tinymce %>
                  <div class="card gedf-card">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <small class="nav-link active" id="posts-tab" data-toggle="tab" role="tab" aria-controls="posts" aria-selected="true">Danos tu Feedback</small>
+                                <small class="nav-link active" id="posts-tab" data-toggle="tab" role="tab" aria-controls="posts" aria-selected="true">Danos tu requerimientos </small>
                             </li>
                         </ul>
                     </div>
@@ -63,18 +72,23 @@
                                 <p class="card-text"><%= requirement.description.html_safe %></p>
                             </div>
                             <div class="card-footer">
-                                <%= form_with(model: [requirement, Comment.new], local: true) do |f| %>
+                                <%= form_with(model: [requirement, @comment], local: true) do |f| %>
                                     <%= f.submit 'Comentar', :class => 'btn btn-primary' %>
                                     <%= f.text_field :content, :id=>'inputPassword5', :class=>'form-control' %>
-                                <% end %>
-                                <!--- Comentario-->
-                                <% requirement.comments.each do |comment| %>
-                                    <h1 class="card-text"> <%= comment.content %> </h1>
                                 <% end %>
                                 <%= link_to "Voto positivo", positive_path(requirement), :class=>"badge badge-success", method: :post %>
                                 <a class="badge badge-success"><%= requirement.positive_votes %></a>
                                 <%= link_to "Voto negativo", negative_path(requirement), :class=>"badge badge-danger", method: :post %>
                                 <a class="badge badge-danger"><%= requirement.negative_votes %></a>
+                            </div>
+                            <div class="card-footer">
+                                <!--- Comentario-->
+                                <% requirement.comments.each do |comment| %>
+
+                                    <p class="card-text"> <strong><%= comment.user.name %></strong> <br>
+                                    <%= comment.content %> </p>
+
+                                <% end %>
                             </div>
                     </div>
                 <% end %>

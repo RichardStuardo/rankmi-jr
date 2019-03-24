@@ -1,6 +1,8 @@
 class RequirementsController < ApplicationController
   def index
-    @requirements = Requirement.order('id DESC')
+    @requirements = Requirement.all.sort_by { |a| [-a.positive_votes, a.title]}
+    @requirement =Requirement.new
+    @comment = Comment.new
   end
   def create
     @requirement = Requirement.new(title: params[:requirement][:title], 
