@@ -1,19 +1,83 @@
-<h1>Requirements#index</h1>
-<p>Find me in app/views/requirements/index.html.erb</p>
+<div class="container-fluid gedf-wrapper">
+        <div class="row">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6 gedf-main">
 
-<%= form_with(model: Requirement.new, local: true ) do |f| %>
+                <!--- \\\\\\\Post-->
+                <%= form_with(model: Requirement.new, local: true ) do |f| %>
+                <%= tinymce %>
+                 <div class="card gedf-card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <small class="nav-link active" id="posts-tab" data-toggle="tab" role="tab" aria-controls="posts" aria-selected="true">Danos tu Feedback</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                                <div class="form-group">
+                                    <label class="sr-only" for="message">post</label>
+                                    <%= f.text_field :title, :class => 'form-control', :id => 'message', :placeholder => 'Título' %>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                                <div class="form-group">
+                                    <label class="sr-only" for="message">post</label>
+                                    <%= f.text_area :description, :class => "tinymce form-control", :id => 'message', :rows => 10, :cols => 30, :placeholder => 'Escribe acá' %>
+            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-toolbar justify-content-between">
+                            <div class="btn-group">
+                            <%= f.submit :Publicar , :class => 'btn btn-primary'%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
- <%= f.text_field :title %>
- <%= tinymce %>
- <%= f.text_area :description, :class => "tinymce", :rows => 20, :cols => 60 %>
- <%= f.submit :Publicar %>
+                <% end %>
 
-<% end %>
 
-<% @requirements.each do |requirement| %>
- <div class="col-md-4">
-  <h3><%= requirement.title %></h3>
-  <p><%= requirement.description.html_safe %></p>
-  <br>
- </div>
-<% end %>
+
+                <!--- \\\\\\\Post-->
+                <br>
+                <% @requirements.each do |requirement| %>
+                    <div class="card gedf-card">
+                        <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="mr-2">
+                                            <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                                        </div>
+                                        <div class="ml-2">
+                                            <div class="h5 m-0"><%= requirement.title %></div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                            <div class="card-body">
+                                <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> <%= requirement.created_at.strftime("%Y-%m-%d") %></div>
+                                <p class="card-text"><%= requirement.description.html_safe %></p>
+                            </div>
+                            <div class="card-footer">
+                                <%= form_with(model: [requirement, Comment.new], local: true) do |f| %>
+                                    <%= f.submit 'Comentar', :class => 'btn btn-primary' %>
+                                    <%= f.text_field :content, :id=>'inputPassword5', :class=>'form-control' %>
+                                <% end %>
+                                <% requirement.comments.each do |comment| %>
+                                    <h1 class="card-text"> <%= comment.content %> </h1>
+                                <% end %>
+                                <%= link_to "Voto positivo", positive_path(requirement), :class=>"badge badge-success", method: :post %>
+                                <a class="badge badge-success"><%= requirement.positive_votes %></a>
+                                <%= link_to "Voto negativo", negative_path(requirement), :class=>"badge badge-danger", method: :post %>
+                                <a class="badge badge-danger"><%= requirement.negative_votes %></a>
+                            </div>
+                    </div>
+                <% end %>
+               </div>
+        </div>
+</div>
