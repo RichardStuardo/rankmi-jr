@@ -5,6 +5,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta name="google-site-verification" content="fUC_5lUUSyUauW3_cHaJT1-5YLxAkwsvMUPpcdjwr2g" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -12,35 +13,19 @@
   </head>
 
   <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-     <div class="collapse navbar-collapse" id="navbarColor01">
-      <form class="form-inline my-2 my-lg-0">
-          <% if user_signed_in? %>
-              <a class="navbar-brand" href="<%= root_path %>">Hi! <%= current_user.name %></a>
-          <% end %>
-      </form>
-      <ul class="navbar-nav ml-auto"> 
-        <% if user_signed_in? %>
-              <li class="nav-item active">
-                <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-warning btn-md navbar-brand' %>
-              </li>
-            <% else %>
-              <li class="nav-item active">
-                <a class="nav-link btn btn-info btn-md"  href="<%= new_user_session_path %>">Log in</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link btn btn-warning " href="<%= new_user_registration_path %>">Sign up</a>
-              </li>
-            <% end %>
-      </ul>
-    </div>
-</nav>
-
-
+  
+  <% if notice.present? %>
+      <div class="alert alert-success alert-dismissable col-md-6 col-md-offset-3">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong><%= notice %></strong>
+      </div>
+    <% end %>
+    <% if alert.present? %>
+      <div class="alert alert-danger alert-dismissable col-md-6 col-md-offset-3">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong><%= alert %></strong>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

@@ -1,6 +1,6 @@
 class RequirementsController < ApplicationController
   def index
-    @requirements = Requirement.order('title ASC')
+    @requirements = Requirement.order('id DESC')
   end
   def create
     @requirement = Requirement.new(title: params[:requirement][:title], 

@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+     <div class="collapse navbar-collapse" id="navbarColor01">
+      <form class="form-inline my-2 my-lg-0">
+          <% if user_signed_in? %>
+              <a class="navbar-brand" href="<%= root_path %>">Hi! <%= current_user.name %></a>
+          <% end %>
+      </form>
+      <ul class="navbar-nav ml-auto"> 
+        <% if user_signed_in? %>
+              <li class="nav-item active">
+                <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-warning btn-md navbar-brand' %>
+              </li>
+            <% else %>
+              <li class="nav-item active">
+                <a class="nav-link btn btn-info btn-md"  href="<%= new_user_session_path %>">Log in</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link btn btn-warning " href="<%= new_user_registration_path %>">Sign up</a>
+              </li>
+            <% end %>
+      </ul>
+    </div>
+</nav>
